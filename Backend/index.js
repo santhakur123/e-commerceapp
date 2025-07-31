@@ -42,48 +42,57 @@
 // // })
 import express from "express";
 import mongoose from "mongoose";
-import commerceRoute from "./route/commerce.js";
+import commerceRoute from "./Backend/route/commerce.js";
+import usersignupRoute from "./Backend/route/userroute.js";
+import reviewRoute from "./Backend/route/reviewroute.js";
 import dotenv from "dotenv";
 import cors from "cors";
-import usersignupRoute from "./route/userroute.js";
-import reviewRoute from "./route/reviewroute.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// For __dirname in ES module
+// Get __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Load env variables
 dotenv.config();
 
 const app = express();
 const dbURL = process.env.ATLAS_DB;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-main()
+// MongoDB connection
+mongoose.connect(dbURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error(err));
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-async function main() {
-  await mongoose.connect(dbURL);
-}
-
-// API Routes
+// API routes
 app.use("/commerce", commerceRoute);
 app.use("/user", usersignupRoute);
 app.use("/commerce/:id/reviews", reviewRoute);
 
 // Serve frontend in production
-app.use(express.static(path.join(__dirname, "client", "build")));
+app.use(express.static(path.join(__dirname, "client", "dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  // Don't interfere with API routes
+  if (
+    req.path.startsWith("/commerce") ||
+    req.path.startsWith("/user") ||
+    req.path.includes("/reviews")
+  ) {
+    return res.status(404).send("API route not found");
+  }
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
-// Start server
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
