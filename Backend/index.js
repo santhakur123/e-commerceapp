@@ -42,9 +42,9 @@
 // // })
 import express from "express";
 import mongoose from "mongoose";
-import commerceRoute from "./Backend/route/commerce.js";
-import usersignupRoute from "./Backend/route/userroute.js";
-import reviewRoute from "./Backend/route/reviewroute.js";
+import commerceRoute from "./route/commerce.js";
+import usersignupRoute from "./route/userroute.js";
+import reviewRoute from "./route/reviewroute.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
