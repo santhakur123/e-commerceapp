@@ -48,8 +48,13 @@ import cors from "cors";
 import usersignupRoute from "./route/userroute.js";
 import reviewRoute from "./route/reviewroute.js";
 import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config(); 
+// For __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config();
 
 const app = express();
 const dbURL = process.env.ATLAS_DB;
@@ -71,14 +76,11 @@ app.use("/commerce", commerceRoute);
 app.use("/user", usersignupRoute);
 app.use("/commerce/:id/reviews", reviewRoute);
 
-// -----------------------------
-// Serve Frontend in Production
-// -----------------------------
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "frontend", "build")));
+// Serve frontend in production
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 // Start server
