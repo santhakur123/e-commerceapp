@@ -16,6 +16,9 @@ import HProducts from "./components/HProducts.jsx";
  import EarBuds from "./ProductPage/EarBuds.jsx";
  import Login from "./components/Login.jsx"
  import SignUp from "./components/SignUp.jsx"
+ import  { Toaster } from 'react-hot-toast';
+ import Show from "./components/Show.jsx";
+ import DetailPage from "./ProductPage/DetailPage.jsx";
 
 function App() {
   
@@ -32,8 +35,9 @@ function App() {
         <Route path="/headphones" element={<Headphones/>}/>
         <Route path="/earbuds" element={<EarBuds/>}/>
         <Route path="/signup" element={<SignUp/>}/>
-        
+        <Route path="/commerce/:id" element={<DetailPage/>}/>
       </Routes>
+      <Toaster/>
 
     </>
   )

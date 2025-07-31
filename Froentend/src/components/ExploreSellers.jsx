@@ -1,17 +1,35 @@
 import React from 'react'
-
+import {useEffect,useState} from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-
-import list from "../../src/list.json"
+import axios from "axios"
+// import list from "../../src/list.json"
 import Cards from './Cards.jsx';
 
 
 function ExploreSellers() {
-  const filterData=list.filter((data)=>{
-      return data.category==="Free"
+  const [commerce,setCommerce]=useState([]);
+  const [filterData,setFilterData]=useState([]);
+   useEffect(()=>{
+    const getCommerce=async ()=>{
+      try{
+        const res =await axios.get("http://localhost:3000/commerce");
+        setCommerce(res.data);
+        //filter products where category is free
+        const filteredData=res.data.filter((data)=>{
+          return data.category==="Free"
+      });
+      setFilterData(filteredData);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    getCommerce();
+
+   
   });
+  
   
   
   var settings = {

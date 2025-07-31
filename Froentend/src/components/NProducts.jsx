@@ -1,11 +1,32 @@
 import React from 'react';
-import list from "../../src/list.json";
+import {useEffect,useState} from "react"
+import axios from "axios";
+// import list from "../../src/list.json";
 import CardN from "../components/CardN.jsx";
 
 function NProducts() {
-    const npData=list.filter((fata)=>{
-        return fata.category==="neck";
-    })
+  const [commerce,setCommerce]=useState([]);
+  const [npData,setNpData]=useState([]);
+   useEffect(()=>{
+    const getCommerce=async ()=>{
+      try{
+        const res =await axios.get("http://localhost:3000/commerce");
+        setCommerce(res.data);
+        //filter products where category is neck
+        const filteredData=res.data.filter((fata)=>{
+            return fata.category==="neck";
+      });
+      setNpData(filteredData);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    getCommerce();
+
+   
+  })
+
+   
   return (
     <>
       

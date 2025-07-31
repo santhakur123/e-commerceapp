@@ -1,11 +1,31 @@
 import React from 'react'
-import list from "../../src/list.json";
+import {useState,useEffect} from "react";
+import axios from "axios";
+// import list from "../../src/list.json";
 import CardH from "../components/CardH.jsx";
 
 function HProducts() {
-    const hpData=list.filter((pata)=>{
-        return pata.category==="head";
-    })
+  const [commerce,setCommerce]=useState([]);
+  const [hpData,setHPData]=useState([]);
+   useEffect(()=>{
+    const getCommerce=async ()=>{
+      try{
+        const res =await axios.get("http://localhost:3000/commerce");
+        setCommerce(res.data);
+        //filter products where category is free
+        const filteredData=res.data.filter((data)=>{
+          return data.category==="head"
+      });
+      setHPData(filteredData);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    getCommerce();
+
+   
+  });
+    
   return (
     <>
       

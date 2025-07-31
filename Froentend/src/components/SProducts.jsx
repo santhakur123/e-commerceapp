@@ -1,11 +1,30 @@
 import React from 'react';
-import list from "../../src/list.json";
+// import list from "../../src/list.json";
 import CardSPEA from "../components/CardSPEA.jsx";
-
+import axios from "axios";
+import {useEffect,useState} from "react";
 function SProducts() {
-  const spData=list.filter((sata)=>{
-    return sata.category==="best";
-  })
+  const [commerce,setCommerce]=useState([]);
+  const [spData,setSPData]=useState([]);
+   useEffect(()=>{
+    const getCommerce=async ()=>{
+      try{
+        const res =await axios.get("http://localhost:3000/commerce");
+        setCommerce(res.data);
+        //filter products where category is best
+        const filteredData=res.data.filter((data)=>{
+          return data.category==="best"
+      });
+      setSPData(filteredData);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    getCommerce();
+
+   
+  });
+  
   return (
     <>
       

@@ -1,8 +1,10 @@
 import React from 'react'
+import {Link} from "react-router-dom"
 
 function CardsP({itm}) {
   return (
     <>
+  <Link to={`/commerce/${itm.id}`}>
     <div className="max-w-screen-2xl container mx-auto md:px-20 px-4 hover-scale-105 duration-280">
       <div className="card bg-base-100 w-96 shadow-xl hover-scale-105 duration-280">
   <figure  className=" card-body cursor-pointer hover:bg-slate-800 px-10 pt-10 ">
@@ -26,6 +28,7 @@ function CardsP({itm}) {
   </div>
 </div>
 </div>
+</Link>
     </>
   )
 }

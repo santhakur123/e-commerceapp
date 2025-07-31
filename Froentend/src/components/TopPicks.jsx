@@ -1,17 +1,36 @@
 import React from 'react';
-
+import {useEffect,useState} from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-
-import list from "../../src/list.json"
+import axios from "axios";
+// import list from "../../src/list.json"
 import CardsP from "./CardsP.jsx";
 
 function TopPicks() {
-    const getData=list.filter((bata)=>{
-        return  bata.category==="good";
-    });
-    console.log(getData);
+  const [commerce,setCommerce]=useState([]);
+  const [tpData,setTPData]=useState([]);
+   useEffect(()=>{
+    const getCommerce=async ()=>{
+      try{
+        const res =await axios.get("http://localhost:3000/commerce");
+        setCommerce(res.data);
+        //filter products where category is free
+        const filteredData=res.data.filter((data)=>{
+          return data.category==="good"
+      });
+      setTPData(filteredData);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    getCommerce();
+
+   
+  });
+  
+    
+    
     var settings = {
         dots: true,
         infinite: false,
@@ -54,7 +73,7 @@ function TopPicks() {
        
       <div>
       <Slider {...settings}>
-        {getData.map((itm)=>{
+        {tpData.map((itm)=>{
            return  <CardsP itm={itm} key={itm.id} />
         })}
       </Slider>

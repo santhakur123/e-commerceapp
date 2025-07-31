@@ -1,8 +1,10 @@
 import React from 'react'
+import {Link} from "react-router-dom"
 
 function CardN({itam}) {
   return (
     <>
+    <Link to={`/commerce/${itam.id}`}>
     <div className="max-w-screen-2xl container mx-auto md:px-20 px-4 ">
       <div className="card bg-base-100 w-96 shadow-xl">
   <figure className=" card-body cursor-pointer hover:bg-slate-800 px-10 pt-10 hover-scale-105 duration-280">
@@ -25,6 +27,7 @@ function CardN({itam}) {
   </div>
 </div>
 </div>
+ </Link>
     </>
   )
 }

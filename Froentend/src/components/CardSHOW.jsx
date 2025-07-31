@@ -1,15 +1,9 @@
 import React from 'react'
-import {Link} from "react-router-dom"
 
-import ExploreSellers from "./ExploreSellers.jsx";
-
-function Cards({item,key}) {
-     
+function CardSHOW() {
   return (
     <>
-    
-     
-     <div className="max-w-screen-2xl container mx-auto md:px-20 px-4 ">
+      <div className="max-w-screen-2xl container mx-auto md:px-20 px-4 ">
      <div className="card bg-base-100 w-96 shadow-xl">
      <Link to ={`/${item.brand}`}>
   <div className="card-body cursor-pointer hover:bg-slate-800 hover:scale-105 duration-280">
@@ -30,4 +24,4 @@ function Cards({item,key}) {
   )
 }
 
-export default Cards;
+export default CardSHOW
