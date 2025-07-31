@@ -89,8 +89,16 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
 app.get("*", (req, res) => {
+  if (
+    req.path.startsWith("/commerce") ||
+    req.path.startsWith("/user") ||
+    req.path.includes("/reviews")
+  ) {
+    return res.status(404).send("API route not found");
+  }
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
+
 
 
 // Start the server
