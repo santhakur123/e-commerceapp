@@ -18,7 +18,8 @@ function Show() {
       const getDetail = async()=>{
         try{
      
-      const find=  await axios.get(`http://localhost:3000/commerce/${id}`);
+     const find = await axios.get(`/commerce/${id}`);
+
       setSeen(find.data);
       }catch(err){
         console.log("error",err);

@@ -10,7 +10,7 @@ function NProducts() {
    useEffect(()=>{
     const getCommerce=async ()=>{
       try{
-        const res =await axios.get("http://localhost:3000/commerce");
+        const res = await axios.get("/commerce");;
         setCommerce(res.data);
         //filter products where category is neck
         const filteredData=res.data.filter((fata)=>{

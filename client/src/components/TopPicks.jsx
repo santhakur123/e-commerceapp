@@ -13,7 +13,7 @@ function TopPicks() {
    useEffect(()=>{
     const getCommerce=async ()=>{
       try{
-        const res =await axios.get("http://localhost:3000/commerce");
+        const res = await axios.get("/commerce");
         setCommerce(res.data);
         //filter products where category is free
         const filteredData=res.data.filter((data)=>{
